@@ -1,4 +1,4 @@
-using System;
+using System.IO;
 
 class Program
 {
@@ -12,9 +12,10 @@ class Program
             Console.WriteLine("Please select from the following options:");
             Console.WriteLine("1. Write ");
             Console.WriteLine("2. Display ");
-            Console.WriteLine("3. Load ");
-            Console.WriteLine("4. Save ");
-            Console.WriteLine("5. Quit ");
+            Console.WriteLine("3. Add Prompt ");
+            Console.WriteLine("4. Load ");
+            Console.WriteLine("5. Save ");
+            Console.WriteLine("6. Quit ");
             Console.Write("What would you like to do? ");
 
             //Read input and change to interger.
@@ -29,6 +30,11 @@ class Program
                 Entry newEntry = new Entry();
                 // newEntry._choice = 1;
                 newEntry.Display();
+            }
+            else if (selection == 3)
+            {
+                WritePrompt newPrompt = new WritePrompt();
+                newPrompt.Display(); 
             }
         }
         while (selection != 5);
@@ -46,39 +52,56 @@ public class Entry
             Prompt newPrompt = new Prompt();
             newPrompt.Display();
 
-            // Console.Write("> ");
-            // _writing = Console.ReadLine();
-            // Console.WriteLine(_writing);
+            Console.Write("> ");
+            _writing = Console.ReadLine();
+            Console.WriteLine(_writing);
+            Console.WriteLine("");
         }
     }
 }
 
 public class Prompt
 {
-    Random randomGenerator = new Random();
-
-    string filename = "prompts.txt";
-    string[] lines = System.IO.File.ReadAllLines(filename);
-
-    int count = 0;
-
     public void Display()
     {
-            // Prompt newPrompt = new Prompt();
-            // newPrompt._prompt = 0;
-            // newPrompt.Display();
+        Random randomGenerator = new Random();
+
+        string filename = "prompts.txt";
+        string[] lines = System.IO.File.ReadAllLines(filename);
+
+        int count = 0;
+        
+        List<string> prompts = new List<string>();
+
         foreach (string line in lines)
         {
             count = count + 1;
-            string[] parts = line.Split("|");
-        
-        int number = randomGenerator.Next(count);
-
-        string prompt = parts[number];
-
-
-        Console.WriteLine($"{prompt}");
+            string[] prompt = line.Split("|");
+            prompts.Add(prompt[0]);
         }
-    }
+
+        int number = randomGenerator.Next(0, count);
         
+        string question = prompts[number];
+
+        Console.WriteLine(question);  
+    }   
+}
+
+public class WritePrompt
+{
+    public void Display()
+    {
+        Console.WriteLine("What would you like the prompt to say? ");
+        string prompt = Console.ReadLine();
+        
+
+        string filename = "prompts.txt";
+        
+        using (StreamWriter outputFile = File.AppendText(filename))
+        {
+            outputFile.WriteLine($"{prompt}|"+ Environment.NewLine);
+        }
+
+    }   
 }
