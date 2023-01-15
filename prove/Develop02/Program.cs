@@ -31,6 +31,11 @@ class Program
                 // newEntry._choice = 1;
                 newEntry.Display();
             }
+            else if (selection == 2)
+            {
+                View newView = new View();
+                newView.Display(); 
+            }
             else if (selection == 3)
             {
                 WritePrompt newPrompt = new WritePrompt();
@@ -45,20 +50,26 @@ class Program
 public class Entry
 {
     public string _writing;
+    public string _dateTime;
+    public List<string> _entries = new List<string>();
 
-    public void Display()
+    
+    public List<String> Display()
     {
-        {
-            Prompt newPrompt = new Prompt();
-            newPrompt.Display();
+        DateTime theCurrentTime = DateTime.Now;
+        string dateText = theCurrentTime.ToShortDateString();
 
-            Console.Write("> ");
-            _writing = Console.ReadLine();
-            Console.WriteLine(_writing);
-            Console.WriteLine("");
-        }
+        Prompt newPrompt = new Prompt();
+        newPrompt.Display();
+
+        Console.Write("> ");
+        _writing = Console.ReadLine();
+       
+        _entries.Add($"{dateText}" + Environment.NewLine + $"{_writing}" + Environment.NewLine);
+
+        return _entries;
     }
-}
+ 
 
 public class Prompt
 {
@@ -84,7 +95,8 @@ public class Prompt
         
         string question = prompts[number];
 
-        Console.WriteLine(question);  
+        Console.WriteLine(question); 
+
     }   
 }
 
@@ -104,4 +116,23 @@ public class WritePrompt
         }
 
     }   
+}
+
+public class Journal
+{
+    public void Display()
+    {
+
+    }
+}
+
+public class View(_entries)
+{
+    public void Display()
+    {
+    foreach (var entry in _entries)
+        {
+            Console.WriteLine($"{entry}");
+        }
+    }
 }
