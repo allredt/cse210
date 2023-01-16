@@ -28,13 +28,12 @@ class Program
             if (selection == 1)
             {
                 Entry newEntry = new Entry();
-                // newEntry._choice = 1;
                 newEntry.Display();
             }
             else if (selection == 2)
             {
-                View newView = new View();
-                newView.Display(); 
+                // View newView = new View();
+                // newView.Display(); 
             }
             else if (selection == 3)
             {
@@ -69,7 +68,8 @@ public class Entry
 
         return _entries;
     }
- 
+
+} 
 
 public class Prompt
 {
@@ -126,13 +126,13 @@ public class Journal
     }
 }
 
-public class View(_entries)
-{
-    public void Display()
-    {
-    foreach (var entry in _entries)
-        {
-            Console.WriteLine($"{entry}");
-        }
-    }
-}
+// public class View(_entries)
+// {
+//     public void Display()
+//     {
+//     foreach (var entry in _entries)
+//         {
+//             Console.WriteLine($"{entry}");
+//         }
+//     }
+// }
