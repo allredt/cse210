@@ -5,6 +5,8 @@ class Program
     static void Main(string[] args)
     {
         int selection = 0;
+        List<string> entriesList = new List<string>();
+
         do
         {
             // Task options to choose from.
@@ -29,11 +31,23 @@ class Program
             {
                 Entry newEntry = new Entry();
                 newEntry.Display();
+                entriesList = newEntry._entries;
+                // foreach (var entry in entriesList)
+                // {
+                //     Console.WriteLine(entry);
+                // }
+
             }
             else if (selection == 2)
             {
-                // View newView = new View();
-                // newView.Display(); 
+                // cannot get this to work, going back to tutoring to help with it.
+
+                View newView = new View(entriesList);
+                newView.Display(); 
+                // foreach (var entry in entriesList)
+                // {
+                //     Console.WriteLine(entry);
+                // }
             }
             else if (selection == 3)
             {
@@ -52,6 +66,7 @@ public class Entry
     public string _dateTime;
     public List<string> _entries = new List<string>();
 
+    public string prompt = "";
     
     public List<String> Display()
     {
@@ -60,11 +75,19 @@ public class Entry
 
         Prompt newPrompt = new Prompt();
         newPrompt.Display();
+        prompt = newPrompt._prompt;
 
         Console.Write("> ");
         _writing = Console.ReadLine();
        
-        _entries.Add($"{dateText}" + Environment.NewLine + $"{_writing}" + Environment.NewLine);
+        _entries.Add($"{dateText} {prompt} \n{_writing}\n");
+
+        // Console.WriteLine(prompt);
+
+        // foreach (var entry in _entries)
+        //         {
+        //             Console.WriteLine(entry);
+        //         }
 
         return _entries;
     }
@@ -73,7 +96,9 @@ public class Entry
 
 public class Prompt
 {
-    public void Display()
+    public string _prompt;
+
+    public string Display()
     {
         Random randomGenerator = new Random();
 
@@ -97,6 +122,9 @@ public class Prompt
 
         Console.WriteLine(question); 
 
+        _prompt = question;
+
+        return _prompt;
     }   
 }
 
@@ -112,7 +140,7 @@ public class WritePrompt
         
         using (StreamWriter outputFile = File.AppendText(filename))
         {
-            outputFile.WriteLine($"{prompt}|"+ Environment.NewLine);
+            outputFile.Write($"\n{prompt}|");
         }
 
     }   
@@ -126,13 +154,21 @@ public class Journal
     }
 }
 
-// public class View(_entries)
-// {
-//     public void Display()
-//     {
-//     foreach (var entry in _entries)
-//         {
-//             Console.WriteLine($"{entry}");
-//         }
-//     }
-// }
+public class View
+{
+    public List<string> _entries;
+
+    
+    public View(List<string> entries)
+    {
+        _entries = entries;
+    }
+    public void Display()
+    {
+
+    foreach (var entry in _entries)
+        {
+            Console.WriteLine($"{entry}\n");
+        }
+    }
+}
