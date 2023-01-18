@@ -29,7 +29,7 @@ class Program
 
             if (selection == 1)
             {
-                Entry newEntry = new Entry();
+                Entry newEntry = new Entry(entriesList);
                 newEntry.Display();
                 entriesList = newEntry._entries;
             }
@@ -64,7 +64,7 @@ class Program
 
         }
 
-        while (selection != 5);
+        while (selection != 6);
         Console.WriteLine("Thanks for using this program");
     }
 }
@@ -73,9 +73,13 @@ public class Entry
 {
     public string _writing;
     public string _dateTime;
-    public List<string> _entries = new List<string>();
+    public List<string> _entries;
 
     public string prompt = "";
+    public Entry(List<string> entries)
+    {
+        _entries = entries;
+    }
     
     public List<String> Display()
     {
@@ -91,6 +95,10 @@ public class Entry
        
         _entries.Add($"{dateText} {prompt} \n{_writing}\n");
 
+        foreach (var entry in _entries)
+        {
+            Console.WriteLine(entry);
+        }
         return _entries;
     }
 
@@ -205,11 +213,11 @@ public class Save
 
         string fileName = _fileName;
 
-        using (StreamWriter outputFile = new StreamWriter(fileName))
+        using (StreamWriter outputFile = new StreamWriter(fileName, true))
         {
             foreach (var entry in _entries)
             {
-                outputFile.WriteLine($"{entry}\n");
+                outputFile.WriteLine($"{entry}");
             }
         }
     }
