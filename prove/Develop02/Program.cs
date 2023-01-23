@@ -9,12 +9,12 @@ class Program
 
         do
         {
-            // Task options to choose from.
+            // Task options to choose from for journaling.
             Console.WriteLine("Welcome to Your Journal!");
             Console.WriteLine("Please select from the following options:");
             Console.WriteLine("1. Write ");
             Console.WriteLine("2. Display ");
-            Console.WriteLine("3. Add Prompt ");
+            Console.WriteLine("3. Add Prompt (Extra Credit)");
             Console.WriteLine("4. Load ");
             Console.WriteLine("5. Save ");
             Console.WriteLine("6. Quit ");
@@ -29,33 +29,42 @@ class Program
 
             if (selection == 1)
             {
-                Entry newEntry = new Entry();
+                Entry newEntry = new Entry(entriesList);
                 newEntry.Display();
                 entriesList = newEntry._entries;
-                // foreach (var entry in entriesList)
-                // {
-                //     Console.WriteLine(entry);
-                // }
-
             }
+
             else if (selection == 2)
             {
-                // cannot get this to work, going back to tutoring to help with it.
-
+                //View entries
                 View newView = new View(entriesList);
                 newView.Display(); 
-                // foreach (var entry in entriesList)
-                // {
-                //     Console.WriteLine(entry);
-                // }
             }
+
             else if (selection == 3)
             {
+                //Add a new prompt
                 WritePrompt newPrompt = new WritePrompt();
                 newPrompt.Display(); 
             }
+
+            else if (selection == 4)
+            {
+                Load newLoad = new Load();
+                newLoad.Display(); 
+                entriesList = newLoad._entries;
+            }
+
+            else if (selection == 5)
+            {
+                //still having difficulty with this.
+                Save newSave = new Save(entriesList);
+                newSave.Display(); 
+            }
+
         }
-        while (selection != 5);
+
+        while (selection != 6);
         Console.WriteLine("Thanks for using this program");
     }
 }
@@ -64,9 +73,13 @@ public class Entry
 {
     public string _writing;
     public string _dateTime;
-    public List<string> _entries = new List<string>();
+    public List<string> _entries;
 
     public string prompt = "";
+    public Entry(List<string> entries)
+    {
+        _entries = entries;
+    }
     
     public List<String> Display()
     {
@@ -82,13 +95,10 @@ public class Entry
        
         _entries.Add($"{dateText} {prompt} \n{_writing}\n");
 
-        // Console.WriteLine(prompt);
-
-        // foreach (var entry in _entries)
-        //         {
-        //             Console.WriteLine(entry);
-        //         }
-
+        foreach (var entry in _entries)
+        {
+            Console.WriteLine(entry);
+        }
         return _entries;
     }
 
@@ -146,14 +156,6 @@ public class WritePrompt
     }   
 }
 
-public class Journal
-{
-    public void Display()
-    {
-
-    }
-}
-
 public class View
 {
     public List<string> _entries;
@@ -169,6 +171,54 @@ public class View
     foreach (var entry in _entries)
         {
             Console.WriteLine($"{entry}\n");
+        }
+    }
+}
+
+public class Load
+{
+    public string _fileName;
+    public List<string> _entries = new List<string>();
+
+    public List<String> Display()
+    {
+        Console.Write("What is the file name? ");
+        _fileName = Console.ReadLine()+".txt";
+
+        string filename = _fileName;
+        string[] lines = System.IO.File.ReadAllLines(filename);        
+
+        foreach (string line in lines)
+        {
+            Console.WriteLine(line);
+            _entries.Add(line);
+        }
+        return _entries;
+    }
+}
+
+public class Save
+{
+    public List<string> _entries;
+    public string _fileName;
+    public Save(List<string> entries)
+    {
+        _entries = entries;
+    }
+    public void Display()
+    {
+      
+        Console.Write("What would you like to save this as? ");
+        _fileName = Console.ReadLine()+".txt";
+
+        string fileName = _fileName;
+
+        using (StreamWriter outputFile = new StreamWriter(fileName, true))
+        {
+            foreach (var entry in _entries)
+            {
+                outputFile.WriteLine($"{entry}");
+            }
         }
     }
 }
