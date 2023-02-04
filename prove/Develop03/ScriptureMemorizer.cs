@@ -21,13 +21,11 @@ class ScriptureMemorizer
     {
         int numWordsToRemove = 3;
         int wordsRemoved = 0;
-        int Count = 0;
 
         do 
         {
             int rndIndex = new Random().Next(0, scriptureTextList.Count());
 
-            Count +=1;
             if (scriptureTextList[rndIndex].Contains('_') == false)
             {
                 scriptureTextList[rndIndex] = new string('_', scriptureTextList[rndIndex].Length);
@@ -42,18 +40,23 @@ class ScriptureMemorizer
         return string.Join(' ', scriptureTextList);
     }
 
-    public bool hasWordsLeft()
+    public int hasWordsLeft()
     {
-        bool retvalue = false;
+        int count = 0;
 
         foreach(string word in scriptureTextList)
         {
-            if(word.Contains('_') == false)
+            if(count < 9)
             {
-                retvalue = true;
+                count += 1;
                 break;
             }
+            // else if(word.Contains('_') == false)
+            // {
+            //     scriptureTextList
+            // }
+
         }
-        return retvalue;
+        return count;
     }
 }

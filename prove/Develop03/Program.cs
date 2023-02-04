@@ -9,11 +9,9 @@ class Program
         ScriptureMemorizer scriptureMemorizer = new ScriptureMemorizer(scripture);
 
         string  userInput = "";
-        int count = 0;
 
-        while (userInput != "quit" && scriptureMemorizer.hasWordsLeft() == true)
+        while (userInput != "quit" || scriptureMemorizer.hasWordsLeft() < 9)
         {
-            count+=1;
             Console.Clear();
             Console.WriteLine(string.Format("{0} {1}", scriptureReference.toString(), scriptureMemorizer.toString()));
             Console.WriteLine();
