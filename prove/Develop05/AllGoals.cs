@@ -2,6 +2,7 @@ class AllGoals
 {
     private List<Goal> allGoals = new List<Goal>();
     private int totalPoints;
+    private int level;
     public int getTotalPoints()
     {
         return totalPoints;
@@ -93,5 +94,12 @@ class AllGoals
         totalPoints += allGoals[recordEvent].getGoalPoints();
 
         Console.WriteLine(string.Format("You now have {0} points.", totalPoints.ToString()));
+    }
+    public int DisplayLevel()
+    {
+        if (totalPoints > 100)
+        level = level+1;
+        totalPoints -= 100;
+        return level;
     }
 }
