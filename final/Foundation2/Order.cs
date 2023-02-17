@@ -1,4 +1,7 @@
-
+class Order
+{
+    
+}
 
 // Order
 // Contains a list of products and a customer. Can calculate the total cost of the order, 

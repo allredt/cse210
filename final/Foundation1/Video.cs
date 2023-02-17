@@ -3,7 +3,7 @@ class Video
     public string _title;
     public string _author;
     public int _length;
-    public int count;
+    protected int count;
     public List<Comment> _comment = new List<Comment>();
     public void Display()
     {

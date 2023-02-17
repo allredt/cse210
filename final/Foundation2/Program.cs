@@ -4,7 +4,13 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Foundation2 World!");
+        Customer customer = new Customer();
+        customer.display();
+        customer.usa();
+
+        Product product = new Product();
+        product.ProductInformation();
+        product.Price();
     }
 }
 // Scenario
